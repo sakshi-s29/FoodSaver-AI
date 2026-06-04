@@ -149,6 +149,33 @@ def waste_risk_report():
     except FileNotFoundError:
         print("No food data found.")
 
+def expiry_alerts():
+    try:
+        with open("food_data.csv", "r") as file:
+            reader = csv.reader(file)
+
+            today = datetime.today()
+
+            print("\n===== Expiry Alerts =====")
+
+            alert_found = False
+
+            for row in reader:
+                food = row[0]
+                expiry_date = datetime.strptime(row[2], "%Y-%m-%d")
+
+                days_left = (expiry_date - today).days
+
+                if days_left <= 2:
+                    print(f"⚠️ ALERT: {food} expires in {days_left} day(s)")
+                    alert_found = True
+
+            if not alert_found:
+                print("No urgent expiry alerts.")
+
+    except FileNotFoundError:
+        print("No food data found.")
+
 while True:
     print("\n===== FoodSaver AI =====")
     print("1. Add Food Item")
@@ -157,7 +184,9 @@ while True:
     print("4. Analytics Dashboard")
     print("5. Search Food Item")
     print("6. waste Risk report")
-    print("7. Exit")
+    print("7. Expiry Alerts")
+    print("8. Exit")
+
     
 
     choice = input("Enter choice: ")
@@ -182,6 +211,9 @@ while True:
         waste_risk_report()
 
     elif choice == "7":
+        expiry_alerts()
+
+    elif choice == "8":
         break
         
     else:
