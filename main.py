@@ -116,6 +116,39 @@ def search_food():
     except FileNotFoundError:
         print("No food data found.")
 
+def waste_risk_report():
+    try:
+        with open("food_data.csv", "r") as file:
+            reader = csv.reader(file)
+
+            total = 0
+            risky = 0
+
+            print("\n===== Waste Risk Report =====")
+
+            today = datetime.today()
+
+            for row in reader:
+                food = row[0]
+
+                expiry_date = datetime.strptime(row[2], "%Y-%m-%d")
+                days_left = (expiry_date - today).days
+
+                total += 1
+
+                if days_left <= 3:
+                    print(f"{food} -> High Risk")
+                    risky += 1
+                else:
+                    print(f"{food} -> Low Risk")
+
+            if total > 0:
+                risk_percent = (risky / total) * 100
+                print(f"\nOverall Waste Risk: {risk_percent:.0f}%")
+
+    except FileNotFoundError:
+        print("No food data found.")
+
 while True:
     print("\n===== FoodSaver AI =====")
     print("1. Add Food Item")
@@ -123,7 +156,8 @@ while True:
     print("3. Smart Recommendations")
     print("4. Analytics Dashboard")
     print("5. Search Food Item")
-    print("6. Exit")
+    print("6. waste Risk report")
+    print("7. Exit")
     
 
     choice = input("Enter choice: ")
@@ -145,6 +179,9 @@ while True:
     
 
     elif choice == "6":
+        waste_risk_report()
+
+    elif choice == "7":
         break
         
     else:
