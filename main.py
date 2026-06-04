@@ -57,13 +57,74 @@ def recommend_food():
 
     except FileNotFoundError:
         print("No food data found.")
+        
+def analytics_dashboard():
+    try:
+        with open("food_data.csv", "r") as file:
+            reader = csv.reader(file)
+
+            total = 0
+            fresh = 0
+            soon = 0
+            immediate = 0
+
+            today = datetime.today()
+
+            for row in reader:
+                total += 1
+
+                expiry_date = datetime.strptime(row[2], "%Y-%m-%d")
+                days_left = (expiry_date - today).days
+
+                if days_left <= 1:
+                    immediate += 1
+                elif days_left <= 3:
+                    soon += 1
+                else:
+                    fresh += 1
+
+            print("\n===== Analytics Dashboard =====")
+            print(f"Total Food Items: {total}")
+            print(f"Fresh Items: {fresh}")
+            print(f"Expiring Soon: {soon}")
+            print(f"Use Immediately: {immediate}")
+
+    except FileNotFoundError:
+        print("No food data found.")
+
+def search_food():
+    search_name = input("Enter Food Name to Search: ")
+
+    try:
+        with open("food_data.csv", "r") as file:
+            reader = csv.reader(file)
+
+            found = False
+
+            for row in reader:
+                if row[0].lower() == search_name.lower():
+                    print("\nFood Found!")
+                    print(f"Food: {row[0]}")
+                    print(f"Quantity: {row[1]}")
+                    print(f"Expiry Date: {row[2]}")
+                    found = True
+                    break
+
+            if not found:
+                print("Food item not found.")
+
+    except FileNotFoundError:
+        print("No food data found.")
 
 while True:
     print("\n===== FoodSaver AI =====")
     print("1. Add Food Item")
     print("2. View Food Items")
     print("3. Smart Recommendations")
-    print("4. Exit")
+    print("4. Analytics Dashboard")
+    print("5. Search Food Item")
+    print("6. Exit")
+    
 
     choice = input("Enter choice: ")
 
@@ -77,6 +138,13 @@ while True:
         recommend_food()
 
     elif choice == "4":
+        analytics_dashboard()
+
+    elif choice == "5":
+        search_food()
+    
+
+    elif choice == "6":
         break
         
     else:
