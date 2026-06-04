@@ -1,0 +1,8 @@
+FoodSaver AI Report
+===================
+Generated On: 2026-06-05
+
+Total Food Items: 2
+Fresh Items: 1
+Expiring Soon: 1
+Use Immediately: 0

@@ -176,6 +176,45 @@ def expiry_alerts():
     except FileNotFoundError:
         print("No food data found.")
 
+def generate_report():
+    try:
+        with open("food_data.csv", "r") as file:
+            reader = csv.reader(file)
+
+            total = 0
+            fresh = 0
+            soon = 0
+            immediate = 0
+
+            today = datetime.today()
+
+            for row in reader:
+                total += 1
+
+                expiry_date = datetime.strptime(row[2], "%Y-%m-%d")
+                days_left = (expiry_date - today).days
+
+                if days_left <= 1:
+                    immediate += 1
+                elif days_left <= 3:
+                    soon += 1
+                else:
+                    fresh += 1
+
+        with open("report.txt", "w") as report:
+            report.write("FoodSaver AI Report\n")
+            report.write("===================\n")
+            report.write(f"Generated On: {today.strftime('%Y-%m-%d')}\n\n")
+            report.write(f"Total Food Items: {total}\n")
+            report.write(f"Fresh Items: {fresh}\n")
+            report.write(f"Expiring Soon: {soon}\n")
+            report.write(f"Use Immediately: {immediate}\n")
+
+        print("Report generated successfully! Check report.txt")
+
+    except FileNotFoundError:
+        print("No food data found.")
+
 while True:
     print("\n===== FoodSaver AI =====")
     print("1. Add Food Item")
@@ -185,7 +224,8 @@ while True:
     print("5. Search Food Item")
     print("6. waste Risk report")
     print("7. Expiry Alerts")
-    print("8. Exit")
+    print("8. Generate Report")
+    print("9. Exit")
 
     
 
@@ -214,6 +254,9 @@ while True:
         expiry_alerts()
 
     elif choice == "8":
+        generate_report()
+
+    elif choice == "9":
         break
         
     else:
