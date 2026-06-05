@@ -222,7 +222,7 @@ while True:
     print("3. Smart Recommendations")
     print("4. Analytics Dashboard")
     print("5. Search Food Item")
-    print("6. waste Risk report")
+    print("6. Waste Risk Report")
     print("7. Expiry Alerts")
     print("8. Generate Report")
     print("9. Exit")
