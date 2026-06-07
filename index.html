@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FoodSaver AI</title>
+    <link rel="stylesheet"href="style.css">
+</head>
+
+</html>
+
+<body>
+
+    <h1>🍎 FoodSaver AI</h1>
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h2 id="totalItems">0</h2>
+            <p>Total Items</p>
+        </div>
+
+        <div class="card">
+            <h2 id="expiringSoon">0</h2>
+            <p>Expiring Soon</p>
+        </div>
+
+        <div class="card">
+            <h2 id="expiredItems">0</h2>
+            <p>Expired</p>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <input type="text" id="foodName" placeholder="Food Name">
+        <input type="date" id="expiryDate">
+        <button onclick="addFood()">Add Food</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Food Item</th>
+                <th>Expiry Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="foodTable"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+
+</body>
